@@ -1,0 +1,7 @@
+[package]
+name = "egg_bot"
+version = "0.1.0"
+
+[dependencies]
+na = "0.32.2"
+rlbot="0.5.0"
