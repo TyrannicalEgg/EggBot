@@ -1,14 +1,24 @@
 extern crate na;
 
+mod bot_state;
+
+use bot_state::BotState;
+
 use na::Vector2;
 use std::{error::Error, f32::consts::PI};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    rlbot::run_bot(MyBot { player_index: 0 })
+    rlbot::run_bot(
+        MyBot { 
+            player_index: 0,
+            bot_state: BotState::HELPER,
+        }
+    )
 }
 
 struct MyBot {
     player_index: usize,
+    bot_state: BotState,
 }
 
 impl rlbot::Bot for MyBot {
@@ -37,7 +47,7 @@ fn get_input(
 
     Some(rlbot::ControllerState {
         throttle: 1.0,
-        steer: steer.max(-1.0).min(1.0),
+        steer: steer.clamp(-1.0, 1.0),
         ..Default::default()
     })
 }
